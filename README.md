@@ -1,5 +1,8 @@
 # 🍉 Watermelon Picker
 
+[![Build and Push Docker Image](https://github.com/vinsim24/watermelon-picker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/vinsim24/watermelon-picker/actions/workflows/docker-build.yml)
+[![Docker Hub](https://img.shields.io/docker/pulls/vinsim24/watermelon-picker)](https://hub.docker.com/r/vinsim24/watermelon-picker)
+
 An AI-powered web application that helps you choose the perfect watermelon using computer vision and expert knowledge.
 
 ## Features
@@ -27,15 +30,19 @@ An AI-powered web application that helps you choose the perfect watermelon using
 
 ### Using Docker (Recommended)
 
-1. **Clone and build**:
-   ```bash
-   git clone <repository-url>
-   cd watermelon-picker
-   docker-compose up --build -d
-   ```
+**Option 1: Use pre-built image from Docker Hub**:
+```bash
+docker run -d -p 3010:3010 --name watermelon-picker vinsim24/watermelon-picker:latest
+```
 
-2. **Access the app**:
-   Open http://localhost:3010
+**Option 2: Clone and build locally**:
+```bash
+git clone https://github.com/vinsim24/watermelon-picker.git
+cd watermelon-picker
+docker-compose up --build -d
+```
+
+**Access the app**: Open http://localhost:3010
 
 ### Local Development
 
@@ -145,29 +152,52 @@ Get the watermelon knowledge base.
 - **Stripe Pattern (15 points)**: Visual quality indicator
 - **Image Analysis (20 points)**: AI-powered bonus scoring
 
+## CI/CD Pipeline
+
+This project uses GitHub Actions for automated building and deployment:
+
+- **Automatic builds**: Every push to `main` branch triggers a Docker image build
+- **Multi-platform support**: Images built for `linux/amd64` and `linux/arm64`
+- **Docker Hub integration**: Images automatically pushed to [vinsim24/watermelon-picker](https://hub.docker.com/r/vinsim24/watermelon-picker)
+- **Smart tagging**: Images tagged with branch name, commit SHA, and `latest` for main branch
+- **Caching**: Build cache optimization for faster subsequent builds
+
+### Available Docker Tags
+- `latest` - Latest stable version from main branch
+- `main-<sha>` - Specific commit from main branch
+- `<branch>-<sha>` - Feature branch builds
+
 ## Deployment
 
 ### Docker Production Deployment
 
-1. **Build and run**:
-   ```bash
-   docker-compose up --build -d
-   ```
+**Using Docker Hub image**:
+```bash
+# Pull and run latest image
+docker pull vinsim24/watermelon-picker:latest
+docker run -d -p 3010:3010 --name watermelon-picker vinsim24/watermelon-picker:latest
 
-2. **View logs**:
-   ```bash
-   docker-compose logs -f watermelon-picker
-   ```
+# View logs
+docker logs -f watermelon-picker
 
-3. **Check status**:
-   ```bash
-   docker-compose ps
-   ```
+# Stop and remove
+docker stop watermelon-picker && docker rm watermelon-picker
+```
 
-4. **Stop**:
-   ```bash
-   docker-compose down
-   ```
+**Using Docker Compose**:
+```bash
+# Build and run locally
+docker-compose up --build -d
+
+# View logs
+docker-compose logs -f watermelon-picker
+
+# Check status
+docker-compose ps
+
+# Stop
+docker-compose down
+```
 
 ### Docker Image Management
 
