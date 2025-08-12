@@ -1,0 +1,26 @@
+services:
+  watermelon-picker:
+    build: .
+    image: watermelon-picker:latest
+    container_name: watermelon-picker-app
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3010/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    networks:
+      - watermelon-picker-network
+
+networks:
+  watermelon-picker-network:
+    driver: bridge
