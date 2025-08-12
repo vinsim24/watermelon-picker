@@ -5,6 +5,8 @@
 
 An AI-powered web application that helps you choose the perfect watermelon using computer vision and expert knowledge.
 
+🚀 **Now with automated Docker builds via GitHub Actions!**
+
 ## Features
 
 - **AI Image Analysis**: Upload photos for automated watermelon quality assessment
